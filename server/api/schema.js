@@ -1,16 +1,16 @@
-const graphql = require('graphql');
-const { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList } = graphql;
+const { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList } = require('graphql');
 
-const posts = [
+
+const cards = [
   {
-    title: 'First post',
-    description: 'Content of the first post',
-    author: 'Flavio'
+    front: 'First Card',
+    back: 'Card the First',
+    id: 1
   },
   {
-    title: 'Second post',
-    description: 'Content of the second post',
-    author: 'Roger'
+    front: 'Second Card',
+    back: 'Card the Second',
+    id: 2
   }
 ];
 
@@ -37,20 +37,17 @@ const authorType =  new GraphQLObjectType({
   }
 });
 
-const postType =  new GraphQLObjectType({
-  name: 'Post',
+const cardType =  new GraphQLObjectType({
+  name: 'Card',
   fields: {
-    title: {
+    front: {
       type: GraphQLString
     },
-    description: {
+    back: {
       type: GraphQLString
     },
-    author: {
-      type: authorType,
-      resolve: (source, params) => {
-        return authors[source.author];
-      }
+    id: {
+      type: GraphQLInt
     }
   }
 });
@@ -58,19 +55,19 @@ const postType =  new GraphQLObjectType({
 const queryType =  new GraphQLObjectType({
   name: 'Query',
   fields: {
-    post: {
-      type: postType,
+    card: {
+      type: cardType,
       args: {
         id: { type: GraphQLInt }
       },
       resolve: (source, {id}) => {
-        return posts[id];
+        return cards[id];
       }
     },
-    posts: {
-      type: new GraphQLList(postType),
+    cards: {
+      type: new GraphQLList(cardType),
       resolve: () => {
-        return posts;
+        return cards;
       }
     }
   }

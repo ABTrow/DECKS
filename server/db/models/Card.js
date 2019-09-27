@@ -10,7 +10,7 @@ const Card = db.define('card', {
     }
   },
   back: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false,
     validate: {
       notEmpty: true
