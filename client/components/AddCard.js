@@ -1,5 +1,18 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Modal } from 'react-native';
+import { gql } from 'apollo-boost';
+import { Mutation } from 'react-apollo';
+import { useMutation } from '@apollo/react-hooks';
+
+const ADD_CARD = gql`
+mutation AddCard($front: String!, $back: String!) {
+  addCard (front: $front, back: $back) {
+    front
+    back
+    id
+  }
+}
+`;
 
 const AddCard = props => {
 
@@ -14,10 +27,8 @@ const AddCard = props => {
     setBackText(text);
   };
 
-
-
-  const addCardHandler = () => {
-    props.addCard({front: frontText, back: backText});
+  const addCardHandler = card => {
+    props.addCard(card);
     setFrontText('');
     setBackText('');
   };
@@ -28,7 +39,12 @@ const AddCard = props => {
         <Text style={styles.header}>Add New Card</Text>
         <TextInput placeholder='front text' style={styles.inputField} onChangeText={frontInputHandler} value={frontText} />
         <TextInput placeholder='back text' style={styles.inputField} onChangeText={backInputHandler} value={backText} />
-        <Button title='CREATE' color='green' onPress={addCardHandler} />
+        <Mutation mutation={ADD_CARD} variables={{front: frontText, back: backText}}>
+          {addCard => <Button title='CREATE' color='green' onPress={async () => {
+            let newCard = await addCard();
+            addCardHandler(newCard.data.addCard);
+          }} /> }
+        </Mutation>
         <Button title='CANCEL' color='red' onPress={props.cancelAddCard} />
       </View>
     </Modal>

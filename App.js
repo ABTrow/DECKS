@@ -16,25 +16,13 @@ const httpLink = createHttpLink({
 });
 
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache()
 });
 
 
-
 export default function App() {
-
-
-
-  // const poopHandler = async () => {
-  //   try {
-  //     let newText = await API.get(`/api`);
-  //     setPoop(poop + newText.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   return (
     <ApolloProvider client={client}>

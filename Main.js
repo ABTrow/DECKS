@@ -5,6 +5,7 @@ import SingleCard from './client/components/SingleCard';
 import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
+import { client } from './App';
 
 
 const GET_CARDS = gql`
@@ -17,27 +18,29 @@ const GET_CARDS = gql`
   }
 `;
 
-const cards = [
-  {
-    front: 'First Card',
-    back: 'Card the First',
-    id: 1
-  },
-  {
-    front: 'Second Card',
-    back: 'Card the Second',
-    id: 2
-  }
-];
+
 
 const Main = (props) => {
 
   const [addingCard, setAddingCard] = useState(false);
-  const [cardDeck, setCardDeck] = useState(cards);
-  const [poop, setPoop] = useState('Poop');
+  const [cardDeck, setCardDeck] = useState([]);
 
-  const addCardHandler = card => {
-    setCardDeck(currentCards => [...currentCards, { ...card, id: String(cardDeck.length + 1)}]);
+  const fetchCards = async () => {
+    try {
+      let databaseCards = await client.query({
+        query: GET_CARDS
+      });
+      setCardDeck(databaseCards.data.cards);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => fetchCards);
+
+  const addCard = async card => {
+    // setCardDeck([...cardDeck, card]);
+    console.log(cardDeck);
     setAddingCard(false);
   };
 
@@ -48,30 +51,23 @@ const Main = (props) => {
   return (
     <View style={styles.container}>
         <Button title='Create New Card' onPress={() => setAddingCard(true)} />
-        <AddCard visible={addingCard} addCard={addCardHandler} cancelAddCard={() => setAddingCard(false)}/>
+        <AddCard visible={addingCard} addCard={addCard} cancelAddCard={() => setAddingCard(false)}/>
 
         <Query query={GET_CARDS}>
           {({loading, error, data }) => {
             if (loading) return <Text>Loading...</Text>;
             if (error) return <Text>Error :(</Text>;
-            console.log(data);
             const cards = data.cards;
             return (
-              <View>
-                {cards.map(card => <Text>{card.front}</Text>)}
-              </View>
+
+              <FlatList keyExtractor={(item, index) => String(item.id)} data={cardDeck} renderItem={itemData => (
+                <SingleCard card={itemData.item} deleteCard={deleteCardHandler}/>
+              )} />
+
             );
           }}
         </Query>
 
-
-
-
-        {/* <FlatList keyExtractor={(item, index) => String(item.id)} data={cardDeck} renderItem={itemData => (
-          <SingleCard card={itemData.item} deleteCard={deleteCardHandler}/>
-        )} /> */}
-        <Button title='POOP BUTTON' onPress={() => console.log('i do nothing')}/>
-        <Text>{poop}</Text>
       </View>
   );
 
