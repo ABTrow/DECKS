@@ -4,7 +4,7 @@ import AddCard from './client/components/AddCard';
 import SingleCard from './client/components/SingleCard';
 import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { Query } from 'react-apollo';
+import { graphql } from 'react-apollo';
 
 
 const GET_CARDS = gql`
