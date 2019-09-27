@@ -5,7 +5,6 @@ import SingleCard from './client/components/SingleCard';
 import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
-import { client } from './App';
 
 
 const GET_CARDS = gql`
@@ -27,20 +26,25 @@ const Main = (props) => {
 
   const fetchCards = async () => {
     try {
-      let databaseCards = await client.query({
+      let databaseCards = await props.client.query({
         query: GET_CARDS
       });
-      setCardDeck(databaseCards.data.cards);
+      console.log('cards in DB:', databaseCards.data.cards.length);
+      //setCardDeck(databaseCards.data.cards);
     } catch (error) {
       console.error(error);
     }
   };
 
-  useEffect(() => fetchCards);
+  useEffect(() => {
+    fetchCards();
+  });
 
   const addCard = async card => {
-    // setCardDeck([...cardDeck, card]);
-    console.log(cardDeck);
+    console.log('pushing this to db: ', card);
+    console.log('current cardDeck: ', cardDeck);
+    console.log('should be:', [...cardDeck, card]);
+    setCardDeck([...cardDeck, card]);
     setAddingCard(false);
   };
 
@@ -53,20 +57,9 @@ const Main = (props) => {
         <Button title='Create New Card' onPress={() => setAddingCard(true)} />
         <AddCard visible={addingCard} addCard={addCard} cancelAddCard={() => setAddingCard(false)}/>
 
-        <Query query={GET_CARDS}>
-          {({loading, error, data }) => {
-            if (loading) return <Text>Loading...</Text>;
-            if (error) return <Text>Error :(</Text>;
-            const cards = data.cards;
-            return (
-
-              <FlatList keyExtractor={(item, index) => String(item.id)} data={cardDeck} renderItem={itemData => (
-                <SingleCard card={itemData.item} deleteCard={deleteCardHandler}/>
-              )} />
-
-            );
-          }}
-        </Query>
+          <FlatList keyExtractor={(item, index) => String(item.id)} data={cardDeck} renderItem={itemData => (
+            <SingleCard card={itemData.item} deleteCard={deleteCardHandler}/>
+          )} />
 
       </View>
   );

@@ -26,7 +26,7 @@ export default function App() {
 
   return (
     <ApolloProvider client={client}>
-      <Main />
+      <Main client={client}/>
     </ApolloProvider>
   );
 }
