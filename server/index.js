@@ -9,6 +9,7 @@ const resolvers = {
       return context.prisma.links();
     },
     cards: (root, args, context, info) => {
+      console.log('getting cards');
       return context.prisma.cards();
     }
   },
@@ -20,6 +21,7 @@ const resolvers = {
       });
     },
     addCard: (root, args, context) => {
+      console.log('addingcard');
       return context.prisma.createCard({
         front: args.front,
         back: args.back
