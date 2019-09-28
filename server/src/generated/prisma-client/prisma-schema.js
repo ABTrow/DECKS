@@ -7,6 +7,10 @@ module.exports = {
   count: Int!
 }
 
+type AggregateDeck {
+  count: Int!
+}
+
 type AggregateLink {
   count: Int!
 }
@@ -20,6 +24,7 @@ type Card {
   createdAt: DateTime!
   front: String!
   back: String!
+  deck: Deck!
 }
 
 type CardConnection {
@@ -29,6 +34,18 @@ type CardConnection {
 }
 
 input CardCreateInput {
+  id: ID
+  front: String!
+  back: String!
+  deck: DeckCreateOneWithoutCardsInput!
+}
+
+input CardCreateManyWithoutDeckInput {
+  create: [CardCreateWithoutDeckInput!]
+  connect: [CardWhereUniqueInput!]
+}
+
+input CardCreateWithoutDeckInput {
   id: ID
   front: String!
   back: String!
@@ -57,6 +74,62 @@ type CardPreviousValues {
   back: String!
 }
 
+input CardScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  front: String
+  front_not: String
+  front_in: [String!]
+  front_not_in: [String!]
+  front_lt: String
+  front_lte: String
+  front_gt: String
+  front_gte: String
+  front_contains: String
+  front_not_contains: String
+  front_starts_with: String
+  front_not_starts_with: String
+  front_ends_with: String
+  front_not_ends_with: String
+  back: String
+  back_not: String
+  back_in: [String!]
+  back_not_in: [String!]
+  back_lt: String
+  back_lte: String
+  back_gt: String
+  back_gte: String
+  back_contains: String
+  back_not_contains: String
+  back_starts_with: String
+  back_not_starts_with: String
+  back_ends_with: String
+  back_not_ends_with: String
+  AND: [CardScalarWhereInput!]
+  OR: [CardScalarWhereInput!]
+  NOT: [CardScalarWhereInput!]
+}
+
 type CardSubscriptionPayload {
   mutation: MutationType!
   node: Card
@@ -78,11 +151,50 @@ input CardSubscriptionWhereInput {
 input CardUpdateInput {
   front: String
   back: String
+  deck: DeckUpdateOneRequiredWithoutCardsInput
+}
+
+input CardUpdateManyDataInput {
+  front: String
+  back: String
 }
 
 input CardUpdateManyMutationInput {
   front: String
   back: String
+}
+
+input CardUpdateManyWithoutDeckInput {
+  create: [CardCreateWithoutDeckInput!]
+  delete: [CardWhereUniqueInput!]
+  connect: [CardWhereUniqueInput!]
+  set: [CardWhereUniqueInput!]
+  disconnect: [CardWhereUniqueInput!]
+  update: [CardUpdateWithWhereUniqueWithoutDeckInput!]
+  upsert: [CardUpsertWithWhereUniqueWithoutDeckInput!]
+  deleteMany: [CardScalarWhereInput!]
+  updateMany: [CardUpdateManyWithWhereNestedInput!]
+}
+
+input CardUpdateManyWithWhereNestedInput {
+  where: CardScalarWhereInput!
+  data: CardUpdateManyDataInput!
+}
+
+input CardUpdateWithoutDeckDataInput {
+  front: String
+  back: String
+}
+
+input CardUpdateWithWhereUniqueWithoutDeckInput {
+  where: CardWhereUniqueInput!
+  data: CardUpdateWithoutDeckDataInput!
+}
+
+input CardUpsertWithWhereUniqueWithoutDeckInput {
+  where: CardWhereUniqueInput!
+  update: CardUpdateWithoutDeckDataInput!
+  create: CardCreateWithoutDeckInput!
 }
 
 input CardWhereInput {
@@ -136,6 +248,7 @@ input CardWhereInput {
   back_not_starts_with: String
   back_ends_with: String
   back_not_ends_with: String
+  deck: DeckWhereInput
   AND: [CardWhereInput!]
   OR: [CardWhereInput!]
   NOT: [CardWhereInput!]
@@ -146,6 +259,170 @@ input CardWhereUniqueInput {
 }
 
 scalar DateTime
+
+type Deck {
+  id: ID!
+  createdAt: DateTime!
+  name: String!
+  description: String!
+  cards(where: CardWhereInput, orderBy: CardOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Card!]
+}
+
+type DeckConnection {
+  pageInfo: PageInfo!
+  edges: [DeckEdge]!
+  aggregate: AggregateDeck!
+}
+
+input DeckCreateInput {
+  id: ID
+  name: String!
+  description: String!
+  cards: CardCreateManyWithoutDeckInput
+}
+
+input DeckCreateOneWithoutCardsInput {
+  create: DeckCreateWithoutCardsInput
+  connect: DeckWhereUniqueInput
+}
+
+input DeckCreateWithoutCardsInput {
+  id: ID
+  name: String!
+  description: String!
+}
+
+type DeckEdge {
+  node: Deck!
+  cursor: String!
+}
+
+enum DeckOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+}
+
+type DeckPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  name: String!
+  description: String!
+}
+
+type DeckSubscriptionPayload {
+  mutation: MutationType!
+  node: Deck
+  updatedFields: [String!]
+  previousValues: DeckPreviousValues
+}
+
+input DeckSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: DeckWhereInput
+  AND: [DeckSubscriptionWhereInput!]
+  OR: [DeckSubscriptionWhereInput!]
+  NOT: [DeckSubscriptionWhereInput!]
+}
+
+input DeckUpdateInput {
+  name: String
+  description: String
+  cards: CardUpdateManyWithoutDeckInput
+}
+
+input DeckUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
+input DeckUpdateOneRequiredWithoutCardsInput {
+  create: DeckCreateWithoutCardsInput
+  update: DeckUpdateWithoutCardsDataInput
+  upsert: DeckUpsertWithoutCardsInput
+  connect: DeckWhereUniqueInput
+}
+
+input DeckUpdateWithoutCardsDataInput {
+  name: String
+  description: String
+}
+
+input DeckUpsertWithoutCardsInput {
+  update: DeckUpdateWithoutCardsDataInput!
+  create: DeckCreateWithoutCardsInput!
+}
+
+input DeckWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  cards_every: CardWhereInput
+  cards_some: CardWhereInput
+  cards_none: CardWhereInput
+  AND: [DeckWhereInput!]
+  OR: [DeckWhereInput!]
+  NOT: [DeckWhereInput!]
+}
+
+input DeckWhereUniqueInput {
+  id: ID
+}
 
 type Link {
   id: ID!
@@ -286,6 +563,12 @@ type Mutation {
   upsertCard(where: CardWhereUniqueInput!, create: CardCreateInput!, update: CardUpdateInput!): Card!
   deleteCard(where: CardWhereUniqueInput!): Card
   deleteManyCards(where: CardWhereInput): BatchPayload!
+  createDeck(data: DeckCreateInput!): Deck!
+  updateDeck(data: DeckUpdateInput!, where: DeckWhereUniqueInput!): Deck
+  updateManyDecks(data: DeckUpdateManyMutationInput!, where: DeckWhereInput): BatchPayload!
+  upsertDeck(where: DeckWhereUniqueInput!, create: DeckCreateInput!, update: DeckUpdateInput!): Deck!
+  deleteDeck(where: DeckWhereUniqueInput!): Deck
+  deleteManyDecks(where: DeckWhereInput): BatchPayload!
   createLink(data: LinkCreateInput!): Link!
   updateLink(data: LinkUpdateInput!, where: LinkWhereUniqueInput!): Link
   updateManyLinks(data: LinkUpdateManyMutationInput!, where: LinkWhereInput): BatchPayload!
@@ -315,6 +598,9 @@ type Query {
   card(where: CardWhereUniqueInput!): Card
   cards(where: CardWhereInput, orderBy: CardOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Card]!
   cardsConnection(where: CardWhereInput, orderBy: CardOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CardConnection!
+  deck(where: DeckWhereUniqueInput!): Deck
+  decks(where: DeckWhereInput, orderBy: DeckOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Deck]!
+  decksConnection(where: DeckWhereInput, orderBy: DeckOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DeckConnection!
   link(where: LinkWhereUniqueInput!): Link
   links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link]!
   linksConnection(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LinkConnection!
@@ -323,6 +609,7 @@ type Query {
 
 type Subscription {
   card(where: CardSubscriptionWhereInput): CardSubscriptionPayload
+  deck(where: DeckSubscriptionWhereInput): DeckSubscriptionPayload
   link(where: LinkSubscriptionWhereInput): LinkSubscriptionPayload
 }
 `

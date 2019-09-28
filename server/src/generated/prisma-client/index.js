@@ -9,6 +9,10 @@ var models = [
     embedded: false
   },
   {
+    name: "Deck",
+    embedded: false
+  },
+  {
     name: "Card",
     embedded: false
   }

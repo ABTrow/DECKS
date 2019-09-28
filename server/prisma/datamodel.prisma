@@ -5,9 +5,18 @@ type Link {
   url: String!
 }
 
+type Deck {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  name: String!
+  description: String!
+  cards: [Card!]! @relation(onDelete: CASCADE)
+}
+
 type Card {
   id: ID! @id
   createdAt: DateTime! @createdAt
   front: String!
   back: String!
+  deck: Deck!  @relation(Link: INLINE)
 }

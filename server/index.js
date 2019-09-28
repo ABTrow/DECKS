@@ -11,6 +11,16 @@ const resolvers = {
     cards: (root, args, context, info) => {
       console.log('getting cards');
       return context.prisma.cards();
+    },
+    deck: (root, args, context, info) => {
+      console.log('getting single deck');
+      return context.prisma.deck({
+        id: args
+      });
+    },
+    decks: (root, args, context, info) => {
+      console.log('getting decks');
+      return context.prisma.decks();
     }
   },
   Mutation: {
@@ -20,13 +30,40 @@ const resolvers = {
         description: args.description
       });
     },
+    // Card Operations
     addCard: (root, args, context) => {
-      console.log('addingcard');
+      console.log('adding card');
       return context.prisma.createCard({
         front: args.front,
-        back: args.back
+        back: args.back,
+        deck: {
+          connect: {
+            id: args.deckId
+          }
+        }
       });
     },
+    deleteCard: (root, args, context) => {
+      console.log('deleting card');
+      return context.prisma.deleteCard({
+        id: args.id
+      });
+    },
+    editCard: (root, args, context) => {
+      console.log('editing card');
+      return context.prisma.updateCard({
+        where: {id: args.id},
+        data: {front: args.front, back: args.back}
+      });
+    },
+    // Deck Operations
+    addDeck: (root, args, context) => {
+      console.log('adding deck');
+      return context.prisma.createDeck({
+        name: args.name,
+        description: args.description,
+      });
+    }
   }
 
 };
