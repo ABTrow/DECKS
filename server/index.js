@@ -3,6 +3,7 @@ const { prisma } = require('./src/generated/prisma-client');
 
 
 const resolvers = {
+
   Query: {
     info: () => 'my first graphql api',
     feed: (root,args, context, info) => {
@@ -15,7 +16,7 @@ const resolvers = {
     deck: (root, args, context, info) => {
       console.log('getting single deck');
       return context.prisma.deck({
-        id: args
+        id: args.id
       });
     },
     decks: (root, args, context, info) => {
@@ -23,6 +24,7 @@ const resolvers = {
       return context.prisma.decks();
     }
   },
+
   Mutation: {
     post: (root, args, context) => {
       return context.prisma.createLink({
@@ -64,7 +66,17 @@ const resolvers = {
         description: args.description,
       });
     }
-  }
+  },
+
+  Deck: {
+    cards(root, args, context) {
+      return context.prisma
+        .deck({
+          id: root.id,
+        })
+        .cards();
+    },
+  },
 
 };
 

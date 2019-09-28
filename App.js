@@ -1,29 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
-import { ApolloClient } from 'apollo-client';
-import { ApolloProvider, useQuery } from '@apollo/react-hooks';
-import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { AppRegistry } from 'react-native';
-import Main from './Main';
+import React from 'react';
+import AllCards from './client/components/AllCards';
+import HomeScreen from './HomeScreen';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { ApolloProvider } from '@apollo/react-hooks';
+import client from './client/apolloClient';
+import AllDecks from './client/components/AllDecks';
+import EditDeck from './client/components/EditDeck';
+import SingleDeck from './client/components/SingleDeck';
 
 
-const httpLink = createHttpLink({
-  uri: 'http://localhost:4000'
-});
 
 
-export const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache()
-});
+const AppNavigator = createStackNavigator(
+  {
+    Home: HomeScreen,
+    AllCards: AllCards,
+    AllDecks: AllDecks,
+    EditDeck: EditDeck,
+    SingleDeck: SingleDeck,
+  },
+  {
+    initialRouteName: 'Home',
+  }
+);
+
+const AppContainer = createAppContainer(AppNavigator);
 
 
 export default function App() {
 
   return (
     <ApolloProvider client={client}>
-      <Main client={client}/>
+      <AppContainer />
     </ApolloProvider>
   );
 }

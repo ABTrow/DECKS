@@ -3,9 +3,9 @@ import { View, Text, TextInput, Button, StyleSheet, Modal } from 'react-native';
 import { gql } from 'apollo-boost';
 import { Mutation } from 'react-apollo';
 
-const ADD_CARD = gql`
-mutation AddCard($front: String!, $back: String!, $deckId: String!) {
-  addCard (front: $front, back: $back, deckId: $deckId) {
+const EDIT_CARD = gql`
+mutation EditCard($id: ID!, $front: String!, $back: String!) {
+  editCard (id: $id, front: $front, back: $back) {
     front
     back
     id
@@ -13,7 +13,7 @@ mutation AddCard($front: String!, $back: String!, $deckId: String!) {
 }
 `;
 
-const AddCard = props => {
+const EditCard = props => {
 
   const [frontText, setFrontText] = useState('');
   const [backText, setBackText] = useState('');
@@ -27,7 +27,7 @@ const AddCard = props => {
   };
 
   const addCardHandler = card => {
-    props.addCard();
+    props.addCard(card);
     setFrontText('');
     setBackText('');
   };
@@ -38,9 +38,8 @@ const AddCard = props => {
         <Text style={styles.header}>Add New Card</Text>
         <TextInput placeholder='front text' style={styles.inputField} onChangeText={frontInputHandler} value={frontText} />
         <TextInput placeholder='back text' style={styles.inputField} onChangeText={backInputHandler} value={backText} />
-        <Mutation mutation={ADD_CARD} variables={{front: frontText, back: backText, deckId: props.deckId}}>
+        <Mutation mutation={ADD_CARD} variables={{front: frontText, back: backText}}>
           {addCard => <Button title='CREATE' color='green' onPress={async () => {
-            console.log(await addCard());
             let newCard = await addCard();
             addCardHandler(newCard.data.addCard);
           }} /> }
@@ -76,4 +75,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddCard;
+export default EditCard;

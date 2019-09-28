@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
+import { Mutation } from 'react-apollo';
+import { gql } from 'apollo-boost';
+
+const DELETE_CARD = gql`
+  mutation DeleteCard($id: ID!) {
+    deleteCard (id: $id) {
+      id
+    }
+  }
+`;
 
 const SingleCard = props => {
 
@@ -15,8 +25,15 @@ const SingleCard = props => {
 
   return (
     <View style={styles.cardContainer}>
-      <View style={styles.deleteButton}>
-        <Button title='DELETE' color='red' onPress={() => props.deleteCard(props.card.id)} />
+
+      <View style={styles.buttonBox}>
+        <Button title='EDIT'/>
+        <Mutation mutation={DELETE_CARD} variables={{id: props.card.id}}>
+          {deleteCard => <Button title='DELETE' color='red' onPress={async () => {
+            await deleteCard();
+            props.deleteCard();
+          }} /> }
+        </Mutation>
       </View>
       <Text>{props.card[displayedText]}</Text>
       <Button title='FLIP' onPress={handleFlip} />
@@ -37,8 +54,9 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 5
   },
-  deleteButton: {
-    alignSelf: 'flex-end'
+  buttonBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 });
 
