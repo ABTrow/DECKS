@@ -3,10 +3,9 @@ import {View, Text, StyleSheet, Button} from 'react-native';
 
 const StudyCard = props => {
 
-
   return (
     <View style={styles.deckContainer}>
-      <Text>{props.card[props.displayedText]}</Text>
+      <Text>{props.card[props.card.displayedText]}</Text>
       <Button title='FLIP' onPress={props.handleFlip} />
     </View>
   );
