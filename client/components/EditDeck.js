@@ -48,6 +48,10 @@ const EditDeck = props => {
     fetchCards();
   };
 
+  const editHandler = () => {
+    fetchCards();
+  };
+
   return (
     <View style={styles.container}>
         <Text>{props.navigation.getParam('deckName', 'NO DECK NAME')}</Text>
@@ -55,7 +59,7 @@ const EditDeck = props => {
         <AddCard visible={addingCard} deckId={props.navigation.getParam('deckId', 'No DECK ID')} addCard={addCard} cancelAddCard={() => setAddingCard(false)}/>
 
           <FlatList keyExtractor={(item, index) => item.id} data={cardDeck} renderItem={itemData => (
-            <SingleCard card={itemData.item} deleteCard={deleteCardHandler}/>
+            <SingleCard card={itemData.item} deleteCard={deleteCardHandler} editHandler={editHandler} />
           )} />
 
       </View>
