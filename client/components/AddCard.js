@@ -4,7 +4,7 @@ import { gql } from 'apollo-boost';
 import { Mutation } from 'react-apollo';
 
 const ADD_CARD = gql`
-mutation AddCard($front: String!, $back: String!, $deckId: String!) {
+mutation AddCard($front: String!, $back: String!, $deckId: ID!) {
   addCard (front: $front, back: $back, deckId: $deckId) {
     front
     back
@@ -40,9 +40,8 @@ const AddCard = props => {
         <TextInput placeholder='back text' style={styles.inputField} onChangeText={backInputHandler} value={backText} />
         <Mutation mutation={ADD_CARD} variables={{front: frontText, back: backText, deckId: props.deckId}}>
           {addCard => <Button title='CREATE' color='green' onPress={async () => {
-            console.log(await addCard());
             let newCard = await addCard();
-            addCardHandler(newCard.data.addCard);
+            addCardHandler();
           }} /> }
         </Mutation>
         <Button title='CANCEL' color='red' onPress={props.cancelAddCard} />
