@@ -1,37 +1,39 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
-import AddCard from './client/components/AddCard';
-import SingleCard from './client/components/SingleCard';
+import React from 'react';
+import AllCards from './client/components/AllCards';
+import HomeScreen from './HomeScreen';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { ApolloProvider } from '@apollo/react-hooks';
+import client from './client/apolloClient';
+import AllDecks from './client/components/AllDecks';
+import EditDeck from './client/components/EditDeck';
+import SingleDeck from './client/components/SingleDeck';
+
+
+
+
+const AppNavigator = createStackNavigator(
+  {
+    Home: HomeScreen,
+    AllCards: AllCards,
+    AllDecks: AllDecks,
+    EditDeck: EditDeck,
+    SingleDeck: SingleDeck,
+  },
+  {
+    initialRouteName: 'Home',
+  }
+);
+
+const AppContainer = createAppContainer(AppNavigator);
+
 
 export default function App() {
 
-  const [addingCard, setAddingCard] = useState(false);
-  const [cardDeck, setCardDeck] = useState([]);
-
-  const addCardHandler = card => {
-    setCardDeck(currentCards => [...currentCards, { ...card, id: String(cardDeck.length + 1)}]);
-    setAddingCard(false);
-  };
-
-  const deleteCardHandler = cardId => {
-    setCardDeck(currentCards => [...currentCards.filter(card => card.id !== cardId)]);
-  };
-
   return (
-    <View style={styles.container}>
-      <Button title='Create New Card' onPress={() => setAddingCard(true)} />
-      <AddCard visible={addingCard} addCard={addCardHandler} cancelAddCard={() => setAddingCard(false)}/>
-      <FlatList keyExtractor={(item, index) => item.id} data={cardDeck} renderItem={itemData => (
-        <SingleCard card={itemData.item} deleteCard={deleteCardHandler}/>
-      )} />
-    </View>
+    <ApolloProvider client={client}>
+      <AppContainer />
+    </ApolloProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 60,
-    flex: 1,
-    backgroundColor: '#F2F4CB'
-  },
-});
