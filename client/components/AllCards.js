@@ -50,7 +50,7 @@ const AllCards = (props) => {
   return (
     <View style={styles.container}>
 
-      <Text>ALL CARDS:</Text>
+      <Text style={styles.header}>ALL CARDS:</Text>
 
       <FlatList keyExtractor={(item, index) => item.id} data={cardDeck} renderItem={itemData => (
         <SingleCard card={itemData.item} deleteCard={deleteCardHandler}/>
@@ -63,10 +63,16 @@ const AllCards = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 60,
+    padding: 20,
     flex: 1,
     backgroundColor: '#4FD0E9'
   },
+  header: {
+    textAlign: 'center',
+    fontSize: 25,
+    color: '#F9F9FF',
+    paddingBottom: 20
+  }
 });
 
 

@@ -54,7 +54,7 @@ const EditDeck = props => {
 
   return (
     <View style={styles.container}>
-        <Text>{props.navigation.getParam('deckName', 'NO DECK NAME')}</Text>
+        <Text style={styles.header}>{props.navigation.getParam('deckName', 'NO DECK NAME')}</Text>
         <Button title='Create New Card' onPress={() => setAddingCard(true)} />
         <AddCard visible={addingCard} deckId={props.navigation.getParam('deckId', 'No DECK ID')} addCard={addCard} cancelAddCard={() => setAddingCard(false)}/>
 
@@ -69,10 +69,16 @@ const EditDeck = props => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 60,
+    padding: 20,
     flex: 1,
     backgroundColor: '#4FD0E9'
   },
+  header: {
+    textAlign: 'center',
+    fontSize: 25,
+    color: '#F9F9FF',
+    paddingBottom: 20
+  }
 });
 
 

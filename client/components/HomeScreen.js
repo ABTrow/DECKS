@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 
 
 const HomeScreen = props => {
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#4FD0E9'}}>
-      <Text style={{ color: 'white' }}>DECKS</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>DECKS</Text>
 
       <Button
         title="View Your Decks"
@@ -23,5 +23,22 @@ const HomeScreen = props => {
 
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#4FD0E9'
+  },
+  title: {
+    color: '#F9F9FF',
+    fontSize: 50,
+    fontWeight: 'bold',
+    padding: 80,
+    textShadowOffset: {width: 2, height: 2},
+    textShadowColor: 'grey',
+    textShadowRadius: 1
+  }
+});
 
 export default HomeScreen;

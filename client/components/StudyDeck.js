@@ -89,7 +89,6 @@ const StudyDeck = props => {
             card.active = true;
             return card;
           });
-          console.log(tempCards);
           setCardDeck(tempCards);
         }} title="Reset Deck" />
 
@@ -123,7 +122,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
     backgroundColor: "transparent",
     margin: 4,
-    color: '#F9F9FF'
+    color: '#F9F9FF',
+    paddingHorizontal: 15,
   }
 });
 
