@@ -45,7 +45,7 @@ const AllDecks = props => {
   return (
     <View style = {styles.container}>
       <Text style={styles.header}>My Decks:</Text>
-      <Button title='Create New Deck' onPress={() => setAddingDeck(true)} />
+      <Button title='Create New Deck' onPress={() => setAddingDeck(true)} color='#F9F9FF' />
       <AddDeck visible={addingDeck} addDeck={addDeck} cancelAddDeck={() => setAddingDeck(false)}/>
 
       <FlatList keyExtractor={(item, index) => item.id} data={decks} renderItem={itemData => (
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: 2, height: 2},
     textShadowColor: 'grey',
     textShadowRadius: 1
-  }
+  },
 });
 
 export default AllDecks;

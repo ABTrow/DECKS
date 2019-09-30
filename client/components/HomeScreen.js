@@ -11,12 +11,14 @@ const HomeScreen = props => {
       <Button
         title="View Your Decks"
         onPress={() => props.navigation.navigate('AllDecks')}
+        color='#F9F9FF'
       />
 
 
       <Button
           title="View All Cards"
           onPress={() => props.navigation.navigate('AllCards')}
+          color='#F9F9FF'
       />
     </View>
   );
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: 2, height: 2},
     textShadowColor: 'grey',
     textShadowRadius: 1
-  }
+  },
 });
 
 export default HomeScreen;

@@ -55,7 +55,7 @@ const EditDeck = props => {
   return (
     <View style={styles.container}>
         <Text style={styles.header}>{props.navigation.getParam('deckName', 'NO DECK NAME')}</Text>
-        <Button title='Create New Card' onPress={() => setAddingCard(true)} />
+        <Button title='Create New Card' onPress={() => setAddingCard(true)} color='#F9F9FF' />
         <AddCard visible={addingCard} deckId={props.navigation.getParam('deckId', 'No DECK ID')} addCard={addCard} cancelAddCard={() => setAddingCard(false)}/>
 
           <FlatList keyExtractor={(item, index) => item.id} data={cardDeck} renderItem={itemData => (
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: 2, height: 2},
     textShadowColor: 'grey',
     textShadowRadius: 1
-  }
+  },
 });
 
 
