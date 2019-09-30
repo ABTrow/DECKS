@@ -93,7 +93,8 @@ const styles = StyleSheet.create({
     shadowColor: '#99847E',
     shadowOffset: {width: 5, height: 5},
     shadowRadius: 1,
-    shadowOpacity: 1
+    shadowOpacity: 1,
+    color: '#191823'
   },
   buttonBox: {
     flexDirection: 'row',

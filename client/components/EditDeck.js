@@ -77,7 +77,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 25,
     color: '#F9F9FF',
-    paddingBottom: 20
+    paddingBottom: 20,
+    fontWeight: 'bold',
+    textShadowOffset: {width: 2, height: 2},
+    textShadowColor: 'grey',
+    textShadowRadius: 1
   }
 });
 

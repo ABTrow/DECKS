@@ -27,7 +27,7 @@ const AddCard = props => {
     setBackText(text);
   };
 
-  const addCardHandler = card => {
+  const addCardHandler = () => {
     props.addCard();
     setFrontText('');
     setBackText('');
@@ -41,7 +41,7 @@ const AddCard = props => {
         <TextInput placeholder='back text' style={styles.inputField} onChangeText={backInputHandler} value={backText} />
         <Mutation mutation={ADD_CARD} variables={{front: frontText, back: backText, deckId: props.deckId}}>
           {addCard => <Button title='CREATE' color='green' onPress={async () => {
-            let newCard = await addCard();
+            await addCard();
             addCardHandler();
           }} /> }
         </Mutation>

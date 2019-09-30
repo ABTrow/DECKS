@@ -5,8 +5,8 @@ const SingleDeck = props => {
 
   return (
     <View style={styles.deckContainer}>
-      <Text style={styles.title}>{props.deck.name}</Text>
-      <Text>{props.deck.description}</Text>
+      <Text style={styles.name}>{props.deck.name}</Text>
+      <Text style={styles.description}>{props.deck.description}</Text>
       <Button title='STUDY!' onPress={() => props.navigation.navigate('StudyDeck', {deckId: props.deck.id, deckName: props.deck.name})}/>
       <Button title='EDIT' onPress={() => props.navigation.navigate('EditDeck', {deckId: props.deck.id, deckName: props.deck.name})} />
 
@@ -34,14 +34,18 @@ const styles = StyleSheet.create({
     shadowColor: '#99847E',
     shadowOffset: {width: 5, height: 5},
     shadowRadius: 1,
-    shadowOpacity: 1
+    shadowOpacity: 1,
   },
   buttonBox: {
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  title: {
+  name: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#191823'
+  },
+  description: {
+    color: 'grey',
   }
 });

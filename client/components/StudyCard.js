@@ -5,7 +5,7 @@ const StudyCard = props => {
 
   return (
     <View style={styles.deckContainer}>
-      <Text>{props.card.displayedText}</Text>
+      <Text style={styles.side}>{props.card.displayedText}</Text>
       <View style={styles.cardContainer}>
         <Text style={styles.cardText}>{props.card[props.card.displayedText]}</Text>
       </View>
@@ -39,6 +39,9 @@ const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     justifyContent: 'center',
+  },
+  side: {
+    color: 'grey'
   }
 });
 

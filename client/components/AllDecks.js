@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
 import { gql } from 'apollo-boost';
 import client from '../apolloClient';
 import SingleDeck from './SingleDeck';
+import AddDeck from './AddDeck';
 
 
 const GET_DECKS = gql`
@@ -18,6 +19,7 @@ const GET_DECKS = gql`
 const AllDecks = props => {
 
   const [decks, setDecks] = useState([]);
+  const [addingDeck, setAddingDeck] = useState(false);
 
   const fetchDecks = async () => {
     try {
@@ -36,9 +38,20 @@ const AllDecks = props => {
     fetchDecks();
   });
 
+  const addDeck = () => {
+    setAddingDeck(false);
+  };
+
   return (
     <View style = {styles.container}>
-      {decks.map(deck => <SingleDeck deck={deck} key={deck.id} navigation={props.navigation} />)}
+      <Text style={styles.header}>My Decks:</Text>
+      <Button title='Create New Deck' onPress={() => setAddingDeck(true)} />
+      <AddDeck visible={addingDeck} addDeck={addDeck} cancelAddDeck={() => setAddingDeck(false)}/>
+
+      <FlatList keyExtractor={(item, index) => item.id} data={decks} renderItem={itemData => (
+        <SingleDeck deck={itemData.item} navigation={props.navigation} />
+      )} />
+
     </View>
   );
 
@@ -48,10 +61,20 @@ const AllDecks = props => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 60,
+    padding: 20,
     flex: 1,
     backgroundColor: '#4FD0E9'
   },
+  header: {
+    textAlign: 'center',
+    fontSize: 25,
+    color: '#F9F9FF',
+    paddingBottom: 20,
+    fontWeight: 'bold',
+    textShadowOffset: {width: 2, height: 2},
+    textShadowColor: 'grey',
+    textShadowRadius: 1
+  }
 });
 
 export default AllDecks;
