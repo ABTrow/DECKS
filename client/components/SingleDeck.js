@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   deckContainer: {
     width: '95%',
     height: 140,
-    backgroundColor: '#F4E4AD',
+    backgroundColor: '#4FD0E9',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderColor: '#D6A760',

@@ -5,8 +5,10 @@ const StudyCard = props => {
 
   return (
     <View style={styles.deckContainer}>
-      <Text>{props.card[props.card.displayedText]}</Text>
-      <Button title='FLIP' onPress={props.handleFlip} />
+      <Text>{props.card.displayedText}</Text>
+      <View style={styles.cardContainer}>
+        <Text style={styles.cardText}>{props.card[props.card.displayedText]}</Text>
+      </View>
     </View>
   );
 
@@ -16,10 +18,10 @@ const StudyCard = props => {
 const styles = StyleSheet.create({
   deckContainer: {
     width: '95%',
-    height: 140,
+    height: 340,
     backgroundColor: '#F4E4AD',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     borderColor: '#D6A760',
     borderWidth: 1,
     padding: 10,
@@ -29,6 +31,15 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     shadowOpacity: 1
   },
+  cardText: {
+    fontSize: 30,
+    textAlign: 'center',
+    color: '#191823',
+  },
+  cardContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  }
 });
 
 export default StudyCard;
