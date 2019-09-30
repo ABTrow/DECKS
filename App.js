@@ -1,6 +1,6 @@
 import React from 'react';
 import AllCards from './client/components/AllCards';
-import HomeScreen from './HomeScreen';
+import HomeScreen from './client/components/HomeScreen';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { ApolloProvider } from '@apollo/react-hooks';

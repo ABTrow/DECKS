@@ -5,7 +5,7 @@ import { View, Text, Button } from 'react-native';
 const HomeScreen = props => {
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'maroon'}}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#4FD0E9'}}>
       <Text style={{ color: 'white' }}>DECKS</Text>
 
       <Button
