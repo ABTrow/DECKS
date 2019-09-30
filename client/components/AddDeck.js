@@ -37,8 +37,8 @@ const AddDeck = props => {
     <Modal visible={props.visible} animationType='slide'>
       <View style={styles.inputContainer}>
         <Text style={styles.header}>Add New Deck</Text>
-        <TextInput placeholder='Deck Name' style={styles.inputField} onChangeText={nameInputHandler} value={nameText} />
-        <TextInput placeholder='Description' style={styles.inputField} onChangeText={descriptionInputHandler} value={descriptionText} />
+        <TextInput placeholder='Deck Name' style={styles.inputField} onChangeText={nameInputHandler} value={nameText} multiline={true} numberOfLines={2} />
+        <TextInput placeholder='Description' style={styles.inputField} onChangeText={descriptionInputHandler} value={descriptionText} multiline={true} numberOfLines={4} />
         <Mutation mutation={ADD_DECK} variables={{name: nameText, description: descriptionText}}>
           {addDeck => <Button title='CREATE' color='green' onPress={async () => {
             await addDeck();
