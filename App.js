@@ -8,6 +8,7 @@ import client from './client/apolloClient';
 import AllDecks from './client/components/AllDecks';
 import EditDeck from './client/components/EditDeck';
 import SingleDeck from './client/components/SingleDeck';
+import StudyDeck from './client/components/StudyDeck';
 
 
 
@@ -19,6 +20,7 @@ const AppNavigator = createStackNavigator(
     AllDecks: AllDecks,
     EditDeck: EditDeck,
     SingleDeck: SingleDeck,
+    StudyDeck: StudyDeck
   },
   {
     initialRouteName: 'Home',

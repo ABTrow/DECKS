@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, Modal } from 'react-native';
 import { gql } from 'apollo-boost';
 import { Mutation } from 'react-apollo';
 
+
 const ADD_CARD = gql`
 mutation AddCard($front: String!, $back: String!, $deckId: ID!) {
   addCard (front: $front, back: $back, deckId: $deckId) {

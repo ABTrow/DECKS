@@ -7,7 +7,9 @@ const SingleDeck = props => {
     <View style={styles.deckContainer}>
       <Text>{props.deck.name}</Text>
       <Text>{props.deck.description}</Text>
-      <Button title='EDIT THIS DECK' onPress={() => props.navigation.navigate('EditDeck', {deckId: props.deck.id, deckName: props.deck.name})} />
+      <Button title='STUDY!' onPress={() => props.navigation.navigate('StudyDeck', {deckId: props.deck.id, deckName: props.deck.name})}/>
+      <Button title='EDIT' onPress={() => props.navigation.navigate('EditDeck', {deckId: props.deck.id, deckName: props.deck.name})} />
+
     </View>
   );
 
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
   deckContainer: {
     width: '95%',
     height: 140,
-    backgroundColor: '#F4E4AD',
+    backgroundColor: '#4FD0E9',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderColor: '#D6A760',
