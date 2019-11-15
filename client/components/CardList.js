@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
-import AddCard from './client/components/AddCard';
+import React from 'react';
+import { StyleSheet, Text, FlatList } from 'react-native';
 import SingleCard from './client/components/SingleCard';
-import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { graphql } from 'react-apollo';
 
@@ -23,15 +21,17 @@ const AllCards = graphql(GET_CARDS)(props => {
   }
   if (cards) {
     return (
-      <FlatList keyExtractor={(item, index) => String(item.id)} data={cardDeck} renderItem={itemData => (
-        <SingleCard card={itemData.item} deleteCard={deleteCardHandler}/>
-      )} />
+      <FlatList
+        keyExtractor={(item, index) => String(item.id)}
+        data={cardDeck}
+        renderItem={itemData => (
+          <SingleCard card={itemData.item} deleteCard={deleteCardHandler} />
+        )}
+      />
     );
   }
 
   return <Text>Loading...</Text>;
-
 });
-
 
 export default AllCards;

@@ -1,18 +1,17 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
 const StudyCard = props => {
-
   return (
     <View style={styles.deckContainer}>
       <Text style={styles.side}>{props.card.displayedText}</Text>
       <View style={styles.cardContainer}>
-        <Text style={styles.cardText}>{props.card[props.card.displayedText]}</Text>
+        <Text style={styles.cardText}>
+          {props.card[props.card.displayedText]}
+        </Text>
       </View>
     </View>
   );
-
-
 };
 
 const styles = StyleSheet.create({
@@ -27,9 +26,9 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 5,
     shadowColor: '#99847E',
-    shadowOffset: {width: 5, height: 5},
+    shadowOffset: { width: 5, height: 5 },
     shadowRadius: 1,
-    shadowOpacity: 1
+    shadowOpacity: 1,
   },
   cardText: {
     fontSize: 30,
@@ -41,10 +40,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   side: {
-    color: 'grey'
-  }
+    color: 'grey',
+  },
 });
 
 export default StudyCard;
-
-

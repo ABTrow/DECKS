@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
-import AddCard from './AddCard';
 import SingleCard from './SingleCard';
 import { gql } from 'apollo-boost';
 import client from '../apolloClient';
-
 
 const GET_CARDS = gql`
   query {
@@ -16,9 +14,7 @@ const GET_CARDS = gql`
   }
 `;
 
-
-const AllCards = (props) => {
-
+const AllCards = props => {
   const [addingCard, setAddingCard] = useState(false);
   const [cardDeck, setCardDeck] = useState([]);
 
@@ -26,7 +22,7 @@ const AllCards = (props) => {
     try {
       let databaseCards = await client.query({
         query: GET_CARDS,
-        fetchPolicy: 'network-only'
+        fetchPolicy: 'network-only',
       });
       console.log('cards in DB:', databaseCards.data.cards.length);
       setCardDeck(databaseCards.data.cards);
@@ -49,23 +45,24 @@ const AllCards = (props) => {
 
   return (
     <View style={styles.container}>
-
       <Text style={styles.header}>ALL CARDS:</Text>
 
-      <FlatList keyExtractor={(item, index) => item.id} data={cardDeck} renderItem={itemData => (
-        <SingleCard card={itemData.item} deleteCard={deleteCardHandler}/>
-      )} />
-
+      <FlatList
+        keyExtractor={(item, index) => item.id}
+        data={cardDeck}
+        renderItem={itemData => (
+          <SingleCard card={itemData.item} deleteCard={deleteCardHandler} />
+        )}
+      />
     </View>
   );
-
 };
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
     flex: 1,
-    backgroundColor: '#4FD0E9'
+    backgroundColor: '#4FD0E9',
   },
   header: {
     textAlign: 'center',
@@ -73,11 +70,10 @@ const styles = StyleSheet.create({
     color: '#F9F9FF',
     paddingBottom: 20,
     fontWeight: 'bold',
-    textShadowOffset: {width: 2, height: 2},
+    textShadowOffset: { width: 2, height: 2 },
     textShadowColor: 'grey',
-    textShadowRadius: 1
-  }
+    textShadowRadius: 1,
+  },
 });
-
 
 export default AllCards;
