@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 const StudyCard = props => {
   return (
-    <View style={styles.deckContainer}>
+    <View style={styles.deckContainer} key={props.card.id}>
       <Text style={styles.side}>{props.card.displayedText}</Text>
       <View style={styles.cardContainer}>
         <Text style={styles.cardText}>
@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F2D0',
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: '#D6A760',
-    borderWidth: 1,
+    // borderColor: '#D6A760',
+    // borderWidth: 1,
     padding: 10,
     margin: 5,
     shadowColor: '#99847E',
