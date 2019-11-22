@@ -51,14 +51,13 @@ const StudyDeck = props => {
   return (
     <View style={styles.container}>
       <Swiper
-        cards={cardDeck}
+        cards={cardDeck.filter(card => card.active === true)}
+        keyExtractor={card => card.id}
         renderCard={card => {
-          if (card.active) {
-            return <StudyCard card={card} key={card.id} />;
-          }
+          return <StudyCard card={card} key={card.id} />;
         }}
         onTapCard={index => {
-          const tempCards = cardDeck;
+          const tempCards = [...cardDeck];
           if (tempCards[index].displayedText === 'front') {
             tempCards[index].displayedText = 'back';
           } else {
@@ -67,12 +66,12 @@ const StudyDeck = props => {
           setCardDeck(tempCards);
         }}
         onSwipedTop={cardIndex => {
-          const tempCards = cardDeck;
+          const tempCards = [...cardDeck];
           tempCards[cardIndex].active = false;
           setCardDeck(tempCards);
         }}
         onSwiped={cardIndex => {
-          const tempCards = cardDeck;
+          const tempCards = [...cardDeck];
           tempCards[cardIndex].displayedText = 'front';
           setCardDeck(tempCards);
         }}
