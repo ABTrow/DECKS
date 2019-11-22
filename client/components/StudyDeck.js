@@ -56,6 +56,7 @@ const StudyDeck = props => {
         renderCard={card => {
           return <StudyCard card={card} key={card.id} />;
         }}
+        showSecondCard={false}
         onTapCard={index => {
           const tempCards = [...cardDeck];
           if (tempCards[index].displayedText === 'front') {
