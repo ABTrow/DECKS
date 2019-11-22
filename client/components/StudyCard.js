@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 const StudyCard = props => {
   return (
-    <View style={styles.deckContainer} key={props.card.id}>
+    <View style={styles.deckContainer}>
       <Text style={styles.side}>{props.card.displayedText}</Text>
       <View style={styles.cardContainer}>
         <Text style={styles.cardText}>

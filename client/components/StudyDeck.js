@@ -54,9 +54,9 @@ const StudyDeck = props => {
         cards={cardDeck.filter(card => card.active === true)}
         keyExtractor={card => card.id}
         renderCard={card => {
-          return <StudyCard card={card} key={card.id} />;
+          if (card) return <StudyCard card={card} />;
         }}
-        showSecondCard={false}
+        showSecondCard={cardDeck.length >= 3 ? true : false}
         onTapCard={index => {
           const tempCards = [...cardDeck];
           if (tempCards[index].displayedText === 'front') {
