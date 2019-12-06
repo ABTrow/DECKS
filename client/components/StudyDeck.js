@@ -21,6 +21,7 @@ const StudyDeck = props => {
 
   const [cardDeck, setCardDeck] = useState([]);
   const [deckLength, setDeckLength] = useState(0);
+  const [cardsToReview, setCardsToReview] = useState([]);
 
   const fetchCards = async () => {
     try {
@@ -51,7 +52,7 @@ const StudyDeck = props => {
   return (
     <View style={styles.container}>
       <Swiper
-        cards={cardDeck.filter(card => card.active === true)}
+        cards={cardDeck}
         keyExtractor={card => card.id}
         renderCard={card => {
           if (card) return <StudyCard card={card} />;
@@ -66,30 +67,29 @@ const StudyDeck = props => {
           }
           setCardDeck(tempCards);
         }}
-        onSwipedTop={cardIndex => {
-          const tempCards = [...cardDeck];
-          tempCards[cardIndex].active = false;
-          setCardDeck(tempCards);
-        }}
-        onSwiped={cardIndex => {
-          const tempCards = [...cardDeck];
-          tempCards[cardIndex].displayedText = 'front';
-          setCardDeck(tempCards);
+        // onSwipedTop={cardIndex => {
+        //   const tempCards = [...cardDeck];
+        //   tempCards[cardIndex].active = false;
+        //   setCardDeck(tempCards);
+        // }}
+        onSwipedBottom={cardIndex => {
+          setCardsToReview([...cardsToReview, cardDeck[cardIndex]]);
         }}
         backgroundColor={'#4FD0E9'}
         cardVerticalMargin={240}
         stackSize={3}
-        infinite={true}
       >
         <Button
           onPress={() => {
-            tempCards = cardDeck.map(card => {
+            tempCards = cardsToReview.map(card => {
               card.active = true;
               return card;
             });
-            setCardDeck(tempCards);
+            setCardDeck(tempCards).then(() => {
+              console.log(cardDeck);
+            });
           }}
-          title="Reset Deck"
+          title={`review ${cardsToReview.length} cards`}
         />
 
         <Text style={styles.text}>Tap To Flip</Text>
